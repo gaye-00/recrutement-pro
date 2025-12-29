@@ -1,0 +1,2 @@
+### Recuperer les offres d'emploi
+GET http://localhost:8080/api/offres
