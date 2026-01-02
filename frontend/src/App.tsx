@@ -11,7 +11,7 @@
 // export default App;
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type JSX } from "react";
 import LoadingSpinner from "./components/common/LoadingSpinner";
 import Layout from "./components/common/Layout/Layout";
 import HomePage from "./pages/HomePage";
@@ -84,12 +84,14 @@ function App() {
       >
         <Routes>
           {/* Routes publiques */}
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage onLogin={function (user: any): void {
+            throw new Error("Function not implemented.");
+          } } />} />
           <Route path="/offres" element={<OffresPage />} />
           <Route path="/offres/:id" element={<OffreDetailPage />} />
 
           {/* Routes d'authentification */}
-          {/* <Route
+          { /* <Route
             path="/connexion"
             element={
               user ? (
@@ -108,7 +110,7 @@ function App() {
                 <InscriptionPage onLogin={handleLogin} />
               )
             }
-          /> */}
+          /> 8/}
 
           {/* Routes candidat */}
           {/* <Route
