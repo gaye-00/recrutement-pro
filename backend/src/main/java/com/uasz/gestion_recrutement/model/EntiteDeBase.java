@@ -25,26 +25,6 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 public class EntiteDeBase {
 
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    // private Integer id;
-
-    // private LocalDateTime dateCreation;
-    // private LocalDateTime dateDerniereModification;
-    // private String creePar;
-    // private String modifiePar;
-
-    // @PrePersist
-    // protected void lorsDeCreation() {
-    //     dateCreation = LocalDateTime.now();
-    //     dateDerniereModification = LocalDateTime.now();
-    // }
-
-    // @PreUpdate
-    // protected void lorsDeModification() {
-    //     dateDerniereModification = LocalDateTime.now();
-    // }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

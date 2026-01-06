@@ -17,6 +17,9 @@ import com.uasz.gestion_recrutement.repository.RecruteurRepository;
 import com.uasz.gestion_recrutement.repository.UtilisateurRepository;
 import com.uasz.gestion_recrutement.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +34,7 @@ public class AuthService {
     private final EntrepriseRepository entrepriseRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
     @Transactional
     public AuthResponse inscrireCandidat(InscriptionCandidatRequest request) {
@@ -101,6 +105,7 @@ public class AuthService {
     }
 
     public AuthResponse seConnecter(ConnexionRequest request) {
+        logger.info("\n\n Connexion {}\n", request);
         Utilisateur utilisateur = utilisateurRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadRequestException("Email ou mot de passe incorrect"));
 
