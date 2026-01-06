@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-GestionRecrutementApplication<gestion-recrutement>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.uasz.gestion_recrutement.GestionRecrutementApplication",
+      "projectName": "gestion-recrutement",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

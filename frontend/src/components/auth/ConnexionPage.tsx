@@ -1,6 +1,13 @@
 import React from "react";
 
-export default function ConnexionPage() {
+{
+  /* <ConnexionPage onLogin={handleLogin} /> */
+}
+export default function ConnexionPage({
+  onLogin,
+}: {
+  onLogin: (userData: any) => void;
+}) {
   return (
     <div>
       <p>ConnexionPage</p>
