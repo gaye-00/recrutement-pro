@@ -1,0 +1,636 @@
+/* Tailwind directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   PALETTE DE COULEURS E-COMMERCE
+   Inspirée de GitHub & n8n
+   ============================================ */
+:root {
+  /* Couleurs principales */
+  --color-primary: #ff6b4a; /* Orange/Corail principal */
+  --color-primary-light: #ff8566;
+  --color-primary-dark: #e85a3a;
+
+  /* Couleurs secondaires */
+  --color-secondary: #4a90ff; /* Bleu */
+  --color-secondary-light: #6ba3ff;
+  --color-secondary-dark: #3a7ae8;
+
+  /* Couleurs neutres (style GitHub) */
+  --color-gray-50: #fafbfc;
+  --color-gray-100: #f6f8fa;
+  --color-gray-200: #e1e4e8;
+  --color-gray-300: #d1d5da;
+  --color-gray-400: #959da5;
+  --color-gray-500: #6a737d;
+  --color-gray-600: #586069;
+  --color-gray-700: #444d56;
+  --color-gray-800: #2f363d;
+  --color-gray-900: #24292e;
+  --color-gray-950: #1a1e22;
+
+  /* Couleurs d'accent */
+  --color-accent-orange: #ff9466;
+  --color-accent-blue: #79b8ff;
+  --color-accent-green: #34d399;
+  --color-accent-red: #ef4444;
+
+  /* Fond et surface */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-tertiary: #24292e;
+
+  /* Bordures */
+  --border-light: #e1e4e8;
+  --border-medium: #d1d5da;
+  --border-dark: #444d56;
+}
+
+/* ============================================
+   CUSTOM SCROLLBAR STYLES
+   ============================================ */
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: var(--color-gray-300);
+    border-radius: 4px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-400);
+  }
+
+  /* Scrollbar pour thème sombre */
+  .scrollbar-dark::-webkit-scrollbar-thumb {
+    background: var(--color-gray-700);
+  }
+
+  .scrollbar-dark::-webkit-scrollbar-thumb:hover {
+    background: var(--color-gray-600);
+  }
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica",
+    "Arial", sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--color-gray-900);
+}
+
+/* Empêcher le scroll quand le sidebar est ouvert sur mobile */
+body.sidebar-open {
+  overflow: hidden;
+}
+
+/* ============================================
+   CUSTOM SELECTION COLORS
+   ============================================ */
+::selection {
+  background-color: rgba(255, 107, 74, 0.2);
+  color: var(--color-gray-900);
+}
+
+::-moz-selection {
+  background-color: rgba(255, 107, 74, 0.2);
+  color: var(--color-gray-900);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Texte avec gradient */
+.gradient-text {
+  @apply bg-gradient-to-r from-orange-500 to-blue-500 bg-clip-text text-transparent;
+}
+
+.gradient-text-primary {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Effet glassmorphism moderne */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.glass-dark {
+  background: rgba(36, 41, 46, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(68, 77, 86, 0.3);
+}
+
+/* Effet de lueur au survol */
+.glow-hover {
+  @apply transition-all duration-300;
+}
+
+.glow-hover:hover {
+  box-shadow: 0 0 30px rgba(255, 107, 74, 0.3);
+}
+
+.glow-hover-blue:hover {
+  box-shadow: 0 0 30px rgba(74, 144, 255, 0.3);
+}
+
+/* Bouton principal avec style GitHub/n8n */
+.btn-primary {
+  @apply px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-medium rounded-lg;
+  @apply hover:from-orange-600 hover:to-orange-700 transition-all duration-300;
+  @apply shadow-lg shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/40;
+  @apply active:scale-95;
+}
+
+.btn-secondary {
+  @apply px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg;
+  @apply hover:from-blue-600 hover:to-blue-700 transition-all duration-300;
+  @apply shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40;
+  @apply active:scale-95;
+}
+
+.btn-outline {
+  @apply px-6 py-3 border-2 border-gray-300 text-gray-900 font-medium rounded-lg;
+  @apply hover:border-orange-500 hover:text-orange-500 transition-all duration-300;
+  @apply active:scale-95;
+}
+
+/* Effet de carte avec hover */
+.card {
+  @apply bg-white rounded-xl border border-gray-200 p-6;
+  @apply transition-all duration-300;
+}
+
+.card-hover {
+  @apply card;
+}
+
+.card-hover:hover {
+  @apply transform -translate-y-2 shadow-2xl shadow-orange-500/10 border-orange-200;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+/* Animation de gradient de fond */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #ff6b4a, #ff8566, #4a90ff, #6ba3ff);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+/* Animation de pulsation */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animation de flottement */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Animations d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.5s ease-out forwards;
+}
+
+.animate-slideRight {
+  animation: slideRight 0.5s ease-out forwards;
+}
+
+.animate-slideLeft {
+  animation: slideLeft 0.5s ease-out forwards;
+}
+
+/* Animation de shimmer (chargement) */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 107, 74, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Skeleton loading */
+.skeleton {
+  @apply bg-gray-200 animate-pulse rounded;
+}
+
+/* Loader spinner personnalisé */
+@keyframes spin-loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  border: 3px solid rgba(255, 107, 74, 0.2);
+  border-top: 3px solid var(--color-primary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin-loader 1s linear infinite;
+}
+
+/* ============================================
+   BACKGROUNDS & PATTERNS
+   ============================================ */
+
+/* Pattern de grille */
+.grid-pattern {
+  background-image: linear-gradient(
+      rgba(255, 107, 74, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 107, 74, 0.05) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Pattern de points */
+.dot-pattern {
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 107, 74, 0.1) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
+
+/* Fond avec gradient subtil */
+.bg-gradient-subtle {
+  background: linear-gradient(135deg, #ffffff 0%, #f6f8fa 100%);
+}
+
+/* ============================================
+   FOCUS STYLES
+   ============================================ */
+*:focus-visible {
+  @apply outline-none ring-2 ring-orange-500/50 ring-offset-2 ring-offset-white;
+}
+
+/* ============================================
+   FORM ELEMENTS
+   ============================================ */
+
+/* Input personnalisé */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  @apply w-full px-4 py-3 border border-gray-300 rounded-lg;
+  @apply focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20;
+  @apply transition-all duration-200;
+}
+
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+input[type="number"]:hover,
+textarea:hover,
+select:hover {
+  @apply border-gray-400;
+}
+
+/* Checkbox personnalisé */
+input[type="checkbox"] {
+  @apply appearance-none w-5 h-5 border-2 border-gray-300 rounded-md cursor-pointer;
+  @apply checked:bg-orange-500 checked:border-orange-500;
+  @apply focus:ring-2 focus:ring-orange-500/30 focus:ring-offset-2 focus:ring-offset-white;
+  @apply transition-all duration-200;
+}
+
+input[type="checkbox"]:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Radio personnalisé */
+input[type="radio"] {
+  @apply appearance-none w-5 h-5 border-2 border-gray-300 rounded-full cursor-pointer;
+  @apply checked:bg-orange-500 checked:border-orange-500;
+  @apply focus:ring-2 focus:ring-orange-500/30 focus:ring-offset-2 focus:ring-offset-white;
+  @apply transition-all duration-200;
+}
+
+input[type="radio"]:checked {
+  background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e");
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ============================================
+   TOOLTIPS
+   ============================================ */
+.tooltip {
+  @apply absolute z-50 px-3 py-2 text-sm text-white bg-gray-900 rounded-lg shadow-xl;
+  @apply opacity-0 invisible transition-all duration-300;
+  @apply pointer-events-none;
+}
+
+.tooltip-trigger:hover .tooltip {
+  @apply opacity-100 visible;
+}
+
+/* ============================================
+   BADGES & LABELS
+   ============================================ */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+}
+
+.badge-primary {
+  @apply badge bg-orange-100 text-orange-700;
+}
+
+.badge-secondary {
+  @apply badge bg-blue-100 text-blue-700;
+}
+
+.badge-success {
+  @apply badge bg-green-100 text-green-700;
+}
+
+.badge-warning {
+  @apply badge bg-yellow-100 text-yellow-700;
+}
+
+.badge-danger {
+  @apply badge bg-red-100 text-red-700;
+}
+
+@keyframes badge-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.badge-pulse {
+  animation: badge-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ============================================
+   TEXT UTILITIES
+   ============================================ */
+
+/* Texte avec animation shimmer */
+@keyframes text-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    #ff6b4a,
+    #ff8566,
+    #4a90ff,
+    #6ba3ff,
+    #ff6b4a
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: text-shimmer 3s linear infinite;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Empêcher la sélection de texte */
+button,
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Cacher la scrollbar tout en gardant la fonctionnalité */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Effet de pression sur bouton */
+.btn-press:active {
+  @apply transform scale-95;
+}
+
+/* Empêcher le changement de layout */
+.prevent-layout-shift {
+  content-visibility: auto;
+  contain-intrinsic-size: 500px;
+}
+
+/* ============================================
+   RESPONSIVE IMAGES
+   ============================================ */
+img {
+  @apply max-w-full h-auto;
+}
+
+/* ============================================
+   DARK MODE SUPPORT (Optionnel)
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  .dark-mode-auto {
+    background-color: var(--color-gray-900);
+    color: var(--color-gray-100);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+/* Désactiver les animations pour les utilisateurs préférant moins de mouvement */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible pour l'accessibilité au clavier */
+.focus-ring {
+  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2;
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+}

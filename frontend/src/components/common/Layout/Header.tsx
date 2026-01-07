@@ -1,3 +1,317 @@
+// import { Link, useLocation } from "react-router-dom";
+// import {
+//   Briefcase,
+//   User,
+//   LogOut,
+//   Menu,
+//   X,
+//   Bell,
+//   ChevronDown,
+// } from "lucide-react";
+// import { useState } from "react";
+
+// interface HeaderProps {
+//   isAuthenticated: boolean;
+//   userRole?: "CANDIDAT" | "RECRUTEUR" | "ADMIN";
+//   userName?: string;
+//   onLogout: () => void;
+// }
+
+// export default function Header({
+//   isAuthenticated,
+//   userRole,
+//   userName,
+//   onLogout,
+// }: HeaderProps) {
+//   const location = useLocation();
+//   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+//   const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+//   const isActive = (path: string) => location.pathname === path;
+
+//   return (
+//     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-ink-200">
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+//         <div className="flex items-center justify-between h-16">
+//           {/* Logo - Minimaliste et élégant */}
+//           <Link to="/" className="flex items-center gap-3 group">
+//             <div className="relative">
+//               <div className="w-10 h-10 bg-ink-950 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
+//                 <Briefcase className="w-5 h-5 text-white" strokeWidth={2.5} />
+//               </div>
+//             </div>
+//             <span className="text-xl font-bold text-ink-950 tracking-tight">
+//               RecrutePro
+//             </span>
+//           </Link>
+
+//           {/* Navigation Desktop */}
+//           <nav className="hidden md:flex items-center gap-1">
+//             <NavLink to="/offres" isActive={isActive("/offres")}>
+//               Offres d'emploi
+//             </NavLink>
+
+//             {isAuthenticated && userRole === "CANDIDAT" && (
+//               <>
+//                 <NavLink
+//                   to="/candidat/candidatures"
+//                   isActive={isActive("/candidat/candidatures")}
+//                 >
+//                   Mes candidatures
+//                 </NavLink>
+//                 <NavLink
+//                   to="/candidat/profil"
+//                   isActive={isActive("/candidat/profil")}
+//                 >
+//                   Profil
+//                 </NavLink>
+//               </>
+//             )}
+
+//             {isAuthenticated && userRole === "RECRUTEUR" && (
+//               <>
+//                 <NavLink
+//                   to="/recruteur/dashboard"
+//                   isActive={isActive("/recruteur/dashboard")}
+//                 >
+//                   Dashboard
+//                 </NavLink>
+//                 <NavLink
+//                   to="/recruteur/offres"
+//                   isActive={isActive("/recruteur/offres")}
+//                 >
+//                   Mes offres
+//                 </NavLink>
+//               </>
+//             )}
+//           </nav>
+
+//           {/* Actions Desktop */}
+//           <div className="hidden md:flex items-center gap-3">
+//             {isAuthenticated ? (
+//               <>
+//                 {/* Notifications */}
+//                 <button className="relative w-10 h-10 flex items-center justify-center text-ink-600 hover:text-ink-950 hover:bg-ink-100 rounded-xl transition-all">
+//                   <Bell className="w-5 h-5" />
+//                   <span className="absolute top-2 right-2 w-2 h-2 bg-ink-950 rounded-full"></span>
+//                 </button>
+
+//                 {/* User Menu */}
+//                 <div className="relative">
+//                   <button
+//                     onClick={() => setUserMenuOpen(!userMenuOpen)}
+//                     className="flex items-center gap-3 px-4 h-10 bg-ink-50 hover:bg-ink-100 rounded-xl transition-all"
+//                   >
+//                     <div className="w-7 h-7 bg-ink-950 rounded-lg flex items-center justify-center">
+//                       <User className="w-4 h-4 text-white" />
+//                     </div>
+//                     <span className="text-sm font-medium text-ink-950">
+//                       {userName}
+//                     </span>
+//                     <ChevronDown
+//                       className={`w-4 h-4 text-ink-600 transition-transform ${
+//                         userMenuOpen ? "rotate-180" : ""
+//                       }`}
+//                     />
+//                   </button>
+
+//                   {/* Dropdown Menu */}
+//                   {userMenuOpen && (
+//                     <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-strong border border-ink-200 py-2 animate-in">
+//                       <div className="px-4 py-3 border-b border-ink-100">
+//                         <p className="text-sm font-medium text-ink-950">
+//                           {userName}
+//                         </p>
+//                         <p className="text-xs text-ink-500 mt-0.5">
+//                           {userRole}
+//                         </p>
+//                       </div>
+
+//                       {userRole === "CANDIDAT" && (
+//                         <Link
+//                           to="/candidat/profil"
+//                           className="flex items-center gap-3 px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50 transition-colors"
+//                           onClick={() => setUserMenuOpen(false)}
+//                         >
+//                           <User className="w-4 h-4" />
+//                           Mon profil
+//                         </Link>
+//                       )}
+
+//                       <button
+//                         onClick={() => {
+//                           onLogout();
+//                           setUserMenuOpen(false);
+//                         }}
+//                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50 transition-colors w-full text-left"
+//                       >
+//                         <LogOut className="w-4 h-4" />
+//                         Déconnexion
+//                       </button>
+//                     </div>
+//                   )}
+//                 </div>
+//               </>
+//             ) : (
+//               <div className="flex items-center gap-2">
+//                 <Link
+//                   to="/connexion"
+//                   className="px-5 h-10 flex items-center text-sm font-medium text-ink-700 hover:text-ink-950 hover:bg-ink-50 rounded-xl transition-all"
+//                 >
+//                   Connexion
+//                 </Link>
+//                 <Link
+//                   to="/inscription"
+//                   className="px-5 h-10 flex items-center text-sm font-medium text-white bg-ink-950 hover:bg-ink-800 rounded-xl transition-all shadow-sm"
+//                 >
+//                   S'inscrire
+//                 </Link>
+//               </div>
+//             )}
+//           </div>
+
+//           {/* Mobile Menu Button */}
+//           <button
+//             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+//             className="md:hidden w-10 h-10 flex items-center justify-center text-ink-600 hover:bg-ink-100 rounded-xl transition-all"
+//           >
+//             {mobileMenuOpen ? (
+//               <X className="w-5 h-5" />
+//             ) : (
+//               <Menu className="w-5 h-5" />
+//             )}
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Mobile Menu */}
+//       {mobileMenuOpen && (
+//         <div className="md:hidden border-t border-ink-200 bg-white">
+//           <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
+//             <MobileNavLink
+//               to="/offres"
+//               onClick={() => setMobileMenuOpen(false)}
+//             >
+//               Offres d'emploi
+//             </MobileNavLink>
+
+//             {isAuthenticated && userRole === "CANDIDAT" && (
+//               <>
+//                 <MobileNavLink
+//                   to="/candidat/candidatures"
+//                   onClick={() => setMobileMenuOpen(false)}
+//                 >
+//                   Mes candidatures
+//                 </MobileNavLink>
+//                 <MobileNavLink
+//                   to="/candidat/profil"
+//                   onClick={() => setMobileMenuOpen(false)}
+//                 >
+//                   Mon profil
+//                 </MobileNavLink>
+//               </>
+//             )}
+
+//             {isAuthenticated && userRole === "RECRUTEUR" && (
+//               <>
+//                 <MobileNavLink
+//                   to="/recruteur/dashboard"
+//                   onClick={() => setMobileMenuOpen(false)}
+//                 >
+//                   Dashboard
+//                 </MobileNavLink>
+//                 <MobileNavLink
+//                   to="/recruteur/offres"
+//                   onClick={() => setMobileMenuOpen(false)}
+//                 >
+//                   Mes offres
+//                 </MobileNavLink>
+//               </>
+//             )}
+
+//             {isAuthenticated ? (
+//               <button
+//                 onClick={() => {
+//                   onLogout();
+//                   setMobileMenuOpen(false);
+//                 }}
+//                 className="w-full text-left px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50 rounded-xl transition-all"
+//               >
+//                 Déconnexion
+//               </button>
+//             ) : (
+//               <div className="flex flex-col gap-2 pt-2">
+//                 <Link
+//                   to="/connexion"
+//                   className="px-4 py-2.5 text-sm font-medium text-center text-ink-700 hover:bg-ink-50 rounded-xl transition-all"
+//                   onClick={() => setMobileMenuOpen(false)}
+//                 >
+//                   Connexion
+//                 </Link>
+//                 <Link
+//                   to="/inscription"
+//                   className="px-4 py-2.5 text-sm font-medium text-center text-white bg-ink-950 hover:bg-ink-800 rounded-xl transition-all"
+//                   onClick={() => setMobileMenuOpen(false)}
+//                 >
+//                   S'inscrire
+//                 </Link>
+//               </div>
+//             )}
+//           </div>
+//         </div>
+//       )}
+//     </header>
+//   );
+// }
+
+// // Composant NavLink pour Desktop
+// function NavLink({
+//   to,
+//   isActive,
+//   children,
+// }: {
+//   to: string;
+//   isActive: boolean;
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <Link
+//       to={to}
+//       className={`
+//         px-4 h-10 flex items-center text-sm font-medium rounded-xl transition-all
+//         ${
+//           isActive
+//             ? "text-ink-950 bg-ink-100"
+//             : "text-ink-600 hover:text-ink-950 hover:bg-ink-50"
+//         }
+//       `}
+//     >
+//       {children}
+//     </Link>
+//   );
+// }
+
+// // Composant NavLink pour Mobile
+// function MobileNavLink({
+//   to,
+//   onClick,
+//   children,
+// }: {
+//   to: string;
+//   onClick: () => void;
+//   children: React.ReactNode;
+// }) {
+//   return (
+//     <Link
+//       to={to}
+//       onClick={onClick}
+//       className="block px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50 rounded-xl transition-all"
+//     >
+//       {children}
+//     </Link>
+//   );
+// }
+
 import { Link, useLocation } from "react-router-dom";
 import {
   Briefcase,
@@ -7,6 +321,7 @@ import {
   X,
   Bell,
   ChevronDown,
+  Sparkles,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -30,23 +345,35 @@ export default function Header({
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-ink-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-dark/80 border-b border-gray-700/50">
+      {/* Gradient aurora en arrière-plan */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 via-secondary-500/5 to-accent-500/5 animate-aurora-wave"></div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo - Minimaliste et élégant */}
-          <Link to="/" className="flex items-center gap-3 group">
+          {/* Logo avec effet lumineux */}
+          <Link to="/" className="flex items-center gap-3 group relative">
+            {/* Effet de lueur derrière le logo */}
+            <div className="absolute inset-0 blur-2xl bg-gradient-aurora opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
+
             <div className="relative">
-              <div className="w-10 h-10 bg-ink-950 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105">
+              <div className="w-10 h-10 bg-gradient-aurora rounded-xl flex items-center justify-center shadow-glow-aurora group-hover:shadow-glow-cyan-lg transition-all duration-300 group-hover:scale-110">
                 <Briefcase className="w-5 h-5 text-white" strokeWidth={2.5} />
               </div>
             </div>
-            <span className="text-xl font-bold text-ink-950 tracking-tight">
+
+            <span className="text-xl font-bold bg-gradient-aurora bg-clip-text text-transparent">
               RecrutePro
+            </span>
+
+            {/* Badge "Beta" animé */}
+            <span className="px-2 py-0.5 text-xs font-semibold bg-primary-500/20 text-primary-400 rounded-full border border-primary-500/30 animate-pulse-aurora">
+              Beta
             </span>
           </Link>
 
           {/* Navigation Desktop */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-2">
             <NavLink to="/offres" isActive={isActive("/offres")}>
               Offres d'emploi
             </NavLink>
@@ -90,39 +417,41 @@ export default function Header({
           <div className="hidden md:flex items-center gap-3">
             {isAuthenticated ? (
               <>
-                {/* Notifications */}
-                <button className="relative w-10 h-10 flex items-center justify-center text-ink-600 hover:text-ink-950 hover:bg-ink-100 rounded-xl transition-all">
+                {/* Notifications avec badge */}
+                <button className="relative w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all group">
                   <Bell className="w-5 h-5" />
-                  <span className="absolute top-2 right-2 w-2 h-2 bg-ink-950 rounded-full"></span>
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-gradient-to-r from-accent-500 to-accent-600 rounded-full shadow-glow-pink animate-pulse"></span>
+                  <div className="absolute inset-0 rounded-xl bg-gradient-aurora opacity-0 group-hover:opacity-10 transition-opacity"></div>
                 </button>
 
-                {/* User Menu */}
+                {/* User Menu avec effet glassmorphism */}
                 <div className="relative">
                   <button
                     onClick={() => setUserMenuOpen(!userMenuOpen)}
-                    className="flex items-center gap-3 px-4 h-10 bg-ink-50 hover:bg-ink-100 rounded-xl transition-all"
+                    className="flex items-center gap-3 px-4 h-10 bg-gray-800/50 backdrop-blur-sm hover:bg-gray-800/70 rounded-xl transition-all border border-gray-700/50 hover:border-primary-500/50 group"
                   >
-                    <div className="w-7 h-7 bg-ink-950 rounded-lg flex items-center justify-center">
+                    <div className="w-7 h-7 bg-gradient-aurora rounded-lg flex items-center justify-center shadow-glow-aurora">
                       <User className="w-4 h-4 text-white" />
                     </div>
-                    <span className="text-sm font-medium text-ink-950">
+                    <span className="text-sm font-medium text-white">
                       {userName}
                     </span>
                     <ChevronDown
-                      className={`w-4 h-4 text-ink-600 transition-transform ${
+                      className={`w-4 h-4 text-gray-400 transition-transform ${
                         userMenuOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
 
-                  {/* Dropdown Menu */}
+                  {/* Dropdown Menu avec animation */}
                   {userMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-strong border border-ink-200 py-2 animate-in">
-                      <div className="px-4 py-3 border-b border-ink-100">
-                        <p className="text-sm font-medium text-ink-950">
+                    <div className="absolute right-0 mt-2 w-56 backdrop-blur-xl bg-dark-900/95 rounded-2xl shadow-glow-aurora border border-gray-700/50 py-2 animate-slideDown overflow-hidden">
+                      {/* Header du menu */}
+                      <div className="px-4 py-3 border-b border-gray-700/50">
+                        <p className="text-sm font-medium text-white">
                           {userName}
                         </p>
-                        <p className="text-xs text-ink-500 mt-0.5">
+                        <p className="text-xs text-gray-400 mt-0.5">
                           {userRole}
                         </p>
                       </div>
@@ -130,7 +459,7 @@ export default function Header({
                       {userRole === "CANDIDAT" && (
                         <Link
                           to="/candidat/profil"
-                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50 transition-colors"
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-gray-800/50 transition-colors"
                           onClick={() => setUserMenuOpen(false)}
                         >
                           <User className="w-4 h-4" />
@@ -143,11 +472,14 @@ export default function Header({
                           onLogout();
                           setUserMenuOpen(false);
                         }}
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50 transition-colors w-full text-left"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors w-full text-left"
                       >
                         <LogOut className="w-4 h-4" />
                         Déconnexion
                       </button>
+
+                      {/* Gradient décoratif en bas */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-aurora"></div>
                     </div>
                   )}
                 </div>
@@ -156,15 +488,21 @@ export default function Header({
               <div className="flex items-center gap-2">
                 <Link
                   to="/connexion"
-                  className="px-5 h-10 flex items-center text-sm font-medium text-ink-700 hover:text-ink-950 hover:bg-ink-50 rounded-xl transition-all"
+                  className="px-5 h-10 flex items-center text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all"
                 >
                   Connexion
                 </Link>
                 <Link
                   to="/inscription"
-                  className="px-5 h-10 flex items-center text-sm font-medium text-white bg-ink-950 hover:bg-ink-800 rounded-xl transition-all shadow-sm"
+                  className="group relative px-5 h-10 flex items-center text-sm font-medium text-white rounded-xl overflow-hidden transition-all"
                 >
-                  S'inscrire
+                  {/* Gradient de fond animé */}
+                  <div className="absolute inset-0 bg-gradient-aurora animate-aurora-wave"></div>
+                  <div className="absolute inset-0 bg-gradient-aurora opacity-0 group-hover:opacity-100 blur-xl transition-opacity"></div>
+                  <span className="relative flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" />
+                    S'inscrire
+                  </span>
                 </Link>
               </div>
             )}
@@ -173,7 +511,7 @@ export default function Header({
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center text-ink-600 hover:bg-ink-100 rounded-xl transition-all"
+            className="md:hidden w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all"
           >
             {mobileMenuOpen ? (
               <X className="w-5 h-5" />
@@ -186,7 +524,7 @@ export default function Header({
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-ink-200 bg-white">
+        <div className="md:hidden border-t border-gray-700/50 backdrop-blur-xl bg-dark-900/95">
           <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
             <MobileNavLink
               to="/offres"
@@ -235,7 +573,7 @@ export default function Header({
                   onLogout();
                   setMobileMenuOpen(false);
                 }}
-                className="w-full text-left px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50 rounded-xl transition-all"
+                className="w-full text-left px-4 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-xl transition-all"
               >
                 Déconnexion
               </button>
@@ -243,17 +581,18 @@ export default function Header({
               <div className="flex flex-col gap-2 pt-2">
                 <Link
                   to="/connexion"
-                  className="px-4 py-2.5 text-sm font-medium text-center text-ink-700 hover:bg-ink-50 rounded-xl transition-all"
+                  className="px-4 py-2.5 text-sm font-medium text-center text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Connexion
                 </Link>
                 <Link
                   to="/inscription"
-                  className="px-4 py-2.5 text-sm font-medium text-center text-white bg-ink-950 hover:bg-ink-800 rounded-xl transition-all"
+                  className="relative px-4 py-2.5 text-sm font-medium text-center text-white rounded-xl overflow-hidden"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  S'inscrire
+                  <div className="absolute inset-0 bg-gradient-aurora"></div>
+                  <span className="relative">S'inscrire</span>
                 </Link>
               </div>
             )}
@@ -278,15 +617,24 @@ function NavLink({
     <Link
       to={to}
       className={`
-        px-4 h-10 flex items-center text-sm font-medium rounded-xl transition-all
-        ${
-          isActive
-            ? "text-ink-950 bg-ink-100"
-            : "text-ink-600 hover:text-ink-950 hover:bg-ink-50"
-        }
+        relative px-4 h-10 flex items-center text-sm font-medium rounded-xl transition-all group
+        ${isActive ? "text-white" : "text-gray-400 hover:text-white"}
       `}
     >
-      {children}
+      {/* Fond actif avec gradient */}
+      {isActive && (
+        <div className="absolute inset-0 bg-gradient-aurora opacity-20 rounded-xl"></div>
+      )}
+
+      {/* Effet hover */}
+      <div className="absolute inset-0 bg-gray-800/50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity"></div>
+
+      <span className="relative">{children}</span>
+
+      {/* Indicateur actif */}
+      {isActive && (
+        <div className="absolute bottom-0 left-2 right-2 h-0.5 bg-gradient-aurora rounded-full"></div>
+      )}
     </Link>
   );
 }
@@ -305,7 +653,7 @@ function MobileNavLink({
     <Link
       to={to}
       onClick={onClick}
-      className="block px-4 py-2.5 text-sm text-ink-700 hover:bg-ink-50 rounded-xl transition-all"
+      className="block px-4 py-2.5 text-sm text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-xl transition-all"
     >
       {children}
     </Link>
