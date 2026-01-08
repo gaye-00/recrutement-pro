@@ -1,384 +1,324 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Briefcase,
   MapPin,
   DollarSign,
   Clock,
-  Users,
   ArrowRight,
   Sparkles,
   Building2,
 } from "lucide-react";
-import { offreService } from "../../services/offreEmploi.service";
+
+// Interface pour les offres d'emploi
+interface OffreEmploiResponse {
+  id: number;
+  titre: string;
+  entrepriseNom: string;
+  localisation: string;
+  salaire?: string;
+  typeContrat: string;
+  competencesRequises?: string;
+  nombreCandidatures: number;
+  dateExpiration: string;
+}
+
+// Données d'exemple (remplace par un fetch réel vers ton API)
+const sampleOffres: OffreEmploiResponse[] = [
+  {
+    id: 1,
+    titre: "Ingénieur DevOps",
+    entrepriseNom: "InnoSoft",
+    localisation: "Remote",
+    salaire: "45k - 60k €/an",
+    typeContrat: "Freelance",
+    competencesRequises: "Agile, Scrum",
+    nombreCandidatures: 29,
+    dateExpiration: "2026-01-15",
+  },
+  {
+    id: 2,
+    titre: "Product Manager",
+    entrepriseNom: "DigitalForge",
+    localisation: "Berlin",
+    salaire: "45k - 60k €/an",
+    typeContrat: "Freelance",
+    competencesRequises: "Python, ML",
+    nombreCandidatures: 40,
+    dateExpiration: "2026-01-29",
+  },
+  {
+    id: 3,
+    titre: "Ingénieur DevOps",
+    entrepriseNom: "CodeWave",
+    localisation: "Dakar",
+    salaire: "60k - 80k €/an",
+    typeContrat: "CDD",
+    competencesRequises: "Figma, Adobe XD",
+    nombreCandidatures: 42,
+    dateExpiration: "2026-02-07",
+  },
+  {
+    id: 4,
+    titre: "Ingénieur DevOps",
+    entrepriseNom: "TechNova",
+    localisation: "Paris",
+    salaire: "45k - 60k €/an",
+    typeContrat: "Stage",
+    competencesRequises: "Python, ML",
+    nombreCandidatures: 43,
+    dateExpiration: "2026-01-21",
+  },
+  {
+    id: 5,
+    titre: "Développeur Full Stack",
+    entrepriseNom: "InnoSoft",
+    localisation: "London",
+    salaire: "45k - 60k €/an",
+    typeContrat: "Freelance",
+    competencesRequises: "Figma, Adobe XD",
+    nombreCandidatures: 38,
+    dateExpiration: "2026-01-23",
+  },
+  {
+    id: 6,
+    titre: "Développeur Full Stack",
+    entrepriseNom: "ByteSphere",
+    localisation: "Berlin",
+    salaire: "60k - 80k €/an",
+    typeContrat: "Stage",
+    competencesRequises: "Figma, Adobe XD",
+    nombreCandidatures: 16,
+    dateExpiration: "2026-01-24",
+  },
+];
 
 export default function FeaturedJobsSection() {
   const [offres, setOffres] = useState<OffreEmploiResponse[]>([]);
   const [loading, setLoading] = useState(true);
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   useEffect(() => {
-    loadOffres();
+    // Remplace par un appel API réel, ex. :
+    // fetch('/api/offres').then(res => res.json()).then(setOffres).finally(() => setLoading(false));
+
+    // Simulation avec données d'exemple
+    const timer = setTimeout(() => {
+      setOffres(sampleOffres);
+      setLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
-  const loadOffres = async () => {
-    try {
-      setLoading(true);
-      const data = await offreService.getActives();
-      // Limiter à 6 offres
-      setOffres(data.slice(0, 6));
-    } catch (error) {
-      console.error("Erreur lors du chargement des offres:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Fonction pour obtenir un gradient aléatoire
-  const getRandomGradient = (index: number) => {
-    const gradients = [
-      "from-primary-500 to-primary-600",
-      "from-secondary-500 to-secondary-600",
-      "from-accent-500 to-accent-600",
-      "from-cyan-500 to-cyan-600",
-      "from-violet-500 to-violet-600",
-      "from-pink-500 to-pink-600",
-    ];
-    return gradients[index % gradients.length];
-  };
-
   return (
-    <section className="relative py-24 bg-dark overflow-hidden">
-      {/* Background avec gradient animé */}
-      <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark-950 to-dark"></div>
-
-      {/* Aurora effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-secondary-500/10 rounded-full blur-[120px] animate-pulse-aurora"></div>
-        <div
-          className="absolute bottom-1/4 left-1/4 w-[500px] h-[500px] bg-accent-500/10 rounded-full blur-[120px] animate-pulse-aurora"
-          style={{ animationDelay: "2s" }}
-        ></div>
+    <section className="relative py-24 bg-[#050505] overflow-hidden">
+      {/* Background ambiance */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary-500/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-500/10 blur-[120px] rounded-full" />
       </div>
-
-      {/* Grille pattern */}
-      <div className="absolute inset-0 dot-pattern opacity-20"></div>
-
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-6 animate-fadeIn">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 backdrop-blur-xl bg-white/5 border border-white/10 rounded-full">
-            <div className="relative">
-              <Sparkles className="w-4 h-4 text-accent-400" />
-              <div className="absolute inset-0 blur-md bg-accent-400 opacity-50 animate-pulse"></div>
-            </div>
-            <span className="text-sm font-medium text-gray-300">
-              Offres du moment
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6">
+            <Sparkles className="w-4 h-4 text-accent-400" />
+            <span className="text-xs font-medium text-gray-400 uppercase tracking-wider">
+              Opportunités Premium
             </span>
-            <div className="w-2 h-2 bg-accent-500 rounded-full animate-pulse"></div>
           </div>
-
-          {/* Titre */}
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
-            <span className="text-white">Découvrez les</span>
-            <br />
-            <span className="bg-gradient-aurora bg-clip-text text-transparent animate-shimmer-aurora bg-[length:200%_100%]">
-              meilleures opportunités
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight">
+            Propulsez votre{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400">
+              carrière
             </span>
           </h2>
-
-          {/* Description */}
-          <p className="text-xl text-gray-400 leading-relaxed">
-            Des centaines d'offres d'emploi vous attendent. Trouvez celle qui
-            correspond à vos aspirations.
+          <p className="text-gray-400 text-lg">
+            Accédez à des postes exclusifs dans les meilleures entreprises tech.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Loading state */}
         {loading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
-              <SkeletonCard key={i} index={i} />
+              <SkeletonCard key={i} />
             ))}
           </div>
         ) : (
-          <>
-            {/* Grid des offres */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          <motion.div
+            layout
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+          >
+            <AnimatePresence>
               {offres.map((offre, index) => (
-                <JobCard
-                  key={offre.id}
-                  offre={offre}
-                  index={index}
-                  gradient={getRandomGradient(index)}
-                  isHovered={hoveredId === offre.id}
-                  onHover={() => setHoveredId(offre.id)}
-                  onLeave={() => setHoveredId(null)}
-                />
+                <JobCard key={offre.id} offre={offre} index={index} />
               ))}
-            </div>
-
-            {/* CTA pour voir toutes les offres */}
-            <div
-              className="flex justify-center animate-fadeIn"
-              style={{ animationDelay: "0.6s" }}
-            >
-              <Link
-                to="/offres"
-                className="group relative px-8 py-4 rounded-xl font-semibold overflow-hidden transition-all hover:scale-105"
-              >
-                {/* Gradient de fond animé */}
-                <div className="absolute inset-0 bg-gradient-aurora animate-aurora-wave bg-[length:200%_100%]"></div>
-
-                {/* Effet de lueur */}
-                <div className="absolute inset-0 bg-gradient-aurora opacity-0 group-hover:opacity-100 blur-2xl transition-opacity"></div>
-
-                {/* Contenu */}
-                <span className="relative flex items-center gap-2 text-white">
-                  Voir toutes les offres
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </Link>
-            </div>
-          </>
+            </AnimatePresence>
+          </motion.div>
         )}
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="flex justify-center"
+        >
+          <Link
+            to="/offres"
+            className="group relative px-10 py-4 bg-white text-black font-bold rounded-2xl overflow-hidden transition-all hover:scale-105 active:scale-95"
+            aria-label="Voir toutes les offres d'emploi"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-400 to-accent-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors">
+              Voir tout le catalogue <ArrowRight className="w-5 h-5" />
+            </span>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
 }
 
-// Composant JobCard avec effets premium
 function JobCard({
   offre,
   index,
-  gradient,
-  isHovered,
-  onHover,
-  onLeave,
 }: {
   offre: OffreEmploiResponse;
   index: number;
-  gradient: string;
-  isHovered: boolean;
-  onHover: () => void;
-  onLeave: () => void;
 }) {
-  // Extraire les tags de compétences
-  const competences = offre.competencesRequises?.split(",").slice(0, 3) || [];
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Calculer les jours restants
-  const daysRemaining = offreService.getDaysRemaining(offre.dateExpiration);
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  // Nombre d'avatars à afficher (max 3)
+  const avatarCount = Math.min(3, offre.nombreCandidatures);
 
   return (
-    <Link
-      to={`/offres/${offre.id}`}
-      className="group block animate-fadeIn"
-      style={{ animationDelay: `${index * 0.1}s` }}
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1, duration: 0.5 }}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="group relative"
     >
-      {/* Effet de lueur derrière la card */}
+      {/* Glow effect confiné */}
       <div
-        className={`absolute -inset-1 bg-gradient-to-r ${gradient} opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-500 rounded-3xl`}
-      ></div>
-
-      {/* Card principale */}
-      <div className="relative h-full backdrop-blur-2xl bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-white/20 transition-all duration-500 group-hover:scale-[1.02] group-hover:-translate-y-2 shadow-glow-aurora group-hover:shadow-glow-cyan-lg">
-        {/* Pattern de fond */}
-        <div className="absolute inset-0 grid-pattern opacity-5"></div>
-
-        {/* Gradient overlay au hover */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-        ></div>
-
-        {/* Badge "Nouveau" si récent */}
-        {daysRemaining && daysRemaining > 25 && (
-          <div className="absolute top-4 right-4 z-10">
-            <div className="relative">
-              <div className="absolute inset-0 bg-accent-500 blur-lg opacity-50 animate-pulse"></div>
-              <div className="relative px-3 py-1 bg-gradient-to-r from-accent-500 to-accent-600 rounded-full text-xs font-bold text-white shadow-glow-pink">
-                NOUVEAU
-              </div>
+        className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl pointer-events-none"
+        style={{
+          background: `radial-gradient(circle 150px at ${mousePos.x}px ${mousePos.y}px, rgba(99, 102, 241, 0.15), transparent)`,
+        }}
+      />
+      <Link
+        to={`/offres/${offre.id}`}
+        className="block relative h-full"
+        aria-label={`Postuler à ${offre.titre} chez ${offre.entrepriseNom}`}
+      >
+        <div className="h-full p-8 rounded-[2rem] bg-[#0f0f0f] border border-white/5 hover:border-white/20 transition-all duration-500 overflow-hidden relative">
+          {/* Header avec nom d'entreprise */}
+          <div className="flex justify-between items-start mb-8">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center border border-white/10 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+              <Building2 className="w-7 h-7 text-white" />
             </div>
-          </div>
-        )}
-
-        {/* Contenu de la card */}
-        <div className="relative p-6 space-y-4">
-          {/* Header avec logo entreprise */}
-          <div className="flex items-start gap-4">
-            {/* Logo entreprise */}
-            <div className="relative flex-shrink-0">
-              <div
-                className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-30 blur-xl`}
-              ></div>
-              <div
-                className={`relative w-16 h-16 bg-gradient-to-br ${gradient} rounded-2xl flex items-center justify-center shadow-glow-cyan group-hover:shadow-glow-cyan-lg transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}
-              >
-                <Building2 className="w-8 h-8 text-white" />
-              </div>
-            </div>
-
-            {/* Info entreprise */}
-            <div className="flex-1 min-w-0">
-              <h3 className="text-lg font-bold text-white mb-1 line-clamp-2 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 group-hover:bg-clip-text transition-all">
-                {offre.titre}
-              </h3>
-              <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors flex items-center gap-1">
-                <Building2 className="w-3.5 h-3.5" />
-                {offre.entrepriseNom}
-              </p>
+            <div className="px-3 py-1 bg-white/5 rounded-full border border-white/10 text-[10px] font-bold text-gray-400 uppercase">
+              {offre.typeContrat}
             </div>
           </div>
 
-          {/* Tags de compétences */}
-          {competences.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {competences.map((comp, i) => (
-                <div
+          {/* Titre et entreprise */}
+          <div className="space-y-2 mb-4">
+            <h3 className="text-xl font-bold text-white group-hover:text-primary-400 transition-colors">
+              {offre.titre}
+            </h3>
+            <p className="text-sm text-gray-400">{offre.entrepriseNom}</p>
+          </div>
+
+          {/* Compétences */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {offre.competencesRequises
+              ?.split(",")
+              .slice(0, 2)
+              .map((skill, i) => (
+                <span
                   key={i}
-                  className="px-3 py-1 backdrop-blur-xl bg-white/5 border border-white/10 rounded-lg text-xs font-medium text-gray-300 group-hover:border-white/20 transition-all"
+                  className="text-[11px] text-gray-400 bg-white/5 px-2 py-1 rounded-md border border-white/5"
                 >
-                  {comp.trim()}
-                </div>
+                  {skill.trim()}
+                </span>
               ))}
-            </div>
-          )}
+          </div>
 
-          {/* Informations principales */}
-          <div className="space-y-3">
-            {/* Localisation */}
-            <div className="flex items-center gap-2 text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-              <div
-                className={`w-8 h-8 bg-gradient-to-br ${gradient} opacity-20 rounded-lg flex items-center justify-center`}
-              >
-                <MapPin className="w-4 h-4 text-primary-400" />
-              </div>
+          {/* Infos pratiques */}
+          <div className="pt-6 space-y-3 border-t border-white/5 mb-8">
+            <div className="flex items-center gap-3 text-sm text-gray-500">
+              <MapPin className="w-4 h-4 text-primary-500" />
               <span>{offre.localisation}</span>
             </div>
-
-            {/* Salaire */}
-            {offre.salaire && (
-              <div className="flex items-center gap-2 text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                <div
-                  className={`w-8 h-8 bg-gradient-to-br ${gradient} opacity-20 rounded-lg flex items-center justify-center`}
-                >
-                  <DollarSign className="w-4 h-4 text-secondary-400" />
-                </div>
-                <span className="font-semibold text-white">
-                  {offreService.formatSalary(offre.salaire)}
-                </span>
-              </div>
-            )}
-
-            {/* Type de contrat */}
-            <div className="flex items-center gap-2 text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-              <div
-                className={`w-8 h-8 bg-gradient-to-br ${gradient} opacity-20 rounded-lg flex items-center justify-center`}
-              >
-                <Briefcase className="w-4 h-4 text-accent-400" />
-              </div>
-              <span>{offre.typeContrat}</span>
+            <div className="flex items-center gap-3 text-sm text-gray-500">
+              <DollarSign className="w-4 h-4 text-accent-500" />
+              <span className="text-white font-medium">
+                {offre.salaire || "Salaire non précisé"}
+              </span>
+            </div>
+            <div className="flex items-center gap-3 text-sm text-gray-500">
+              <Clock className="w-4 h-4 text-gray-400" />
+              <span>
+                Expire le{" "}
+                {new Date(offre.dateExpiration).toLocaleDateString("fr-FR")}
+              </span>
             </div>
           </div>
 
-          {/* Séparateur */}
-          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-
-          {/* Footer */}
-          <div className="flex items-center justify-between">
-            {/* Statistiques */}
-            <div className="flex items-center gap-4 text-xs text-gray-500">
-              {/* Candidatures */}
-              <div className="flex items-center gap-1">
-                <Users className="w-3.5 h-3.5" />
-                <span>
-                  {offre.nombreCandidatures} candidat
-                  {offre.nombreCandidatures > 1 ? "s" : ""}
-                </span>
-              </div>
-
-              {/* Jours restants */}
-              {daysRemaining && daysRemaining > 0 && (
-                <div className="flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5" />
-                  <span>{daysRemaining}j restants</span>
+          {/* Footer avec avatars dynamiques */}
+          <div className="mt-8 flex items-center justify-between">
+            <div className="flex items-center -space-x-2">
+              {[...Array(avatarCount)].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-6 h-6 rounded-full bg-white border-2 border-[#0f0f0f] flex items-center justify-center"
+                >
+                  <span className="text-[10px] font-bold text-black">
+                    {i + 1}
+                  </span>
                 </div>
+              ))}
+              {offre.nombreCandidatures > 3 && (
+                <span className="pl-4 text-[11px] text-gray-500">
+                  +{offre.nombreCandidatures - 3} postulants
+                </span>
               )}
             </div>
-
-            {/* Bouton d'action */}
-            <div className="flex items-center gap-2 text-sm font-medium text-primary-400 group-hover:text-primary-300 transition-colors">
-              <span>Postuler</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <div
+              className={`w-10 h-10 rounded-full bg-white flex items-center justify-center transform transition-all duration-500 ${
+                isHovered
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-4 opacity-0"
+              }`}
+            >
+              <ArrowRight className="w-5 h-5 text-black" />
             </div>
           </div>
-        </div>
 
-        {/* Border animation au hover */}
-        <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-          <div className="absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer-aurora bg-[length:200%_100%]"></div>
+          {/* Border animation */}
+          <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/10 rounded-[2rem] transition-colors pointer-events-none" />
         </div>
-
-        {/* Particules décoratives */}
-        <div className="absolute top-0 right-0 w-32 h-32 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-          <div
-            className={`absolute top-4 right-4 w-2 h-2 bg-white rounded-full animate-float`}
-          ></div>
-          <div
-            className={`absolute top-8 right-12 w-1.5 h-1.5 bg-primary-400 rounded-full animate-float`}
-            style={{ animationDelay: "0.5s" }}
-          ></div>
-          <div
-            className={`absolute top-12 right-8 w-1 h-1 bg-secondary-400 rounded-full animate-float`}
-            style={{ animationDelay: "1s" }}
-          ></div>
-        </div>
-      </div>
-    </Link>
+      </Link>
+    </motion.div>
   );
 }
 
-// Composant SkeletonCard pour le loading
-function SkeletonCard({ index }: { index: number }) {
+function SkeletonCard() {
   return (
-    <div
-      className="animate-fadeIn"
-      style={{ animationDelay: `${index * 0.1}s` }}
-    >
-      <div className="h-full backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-6 space-y-4">
-        {/* Header skeleton */}
-        <div className="flex items-start gap-4">
-          <div className="w-16 h-16 bg-white/10 rounded-2xl animate-pulse"></div>
-          <div className="flex-1 space-y-2">
-            <div className="h-5 bg-white/10 rounded-lg animate-pulse w-3/4"></div>
-            <div className="h-4 bg-white/10 rounded-lg animate-pulse w-1/2"></div>
-          </div>
-        </div>
-
-        {/* Tags skeleton */}
-        <div className="flex gap-2">
-          <div className="h-7 w-20 bg-white/10 rounded-lg animate-pulse"></div>
-          <div className="h-7 w-16 bg-white/10 rounded-lg animate-pulse"></div>
-          <div className="h-7 w-24 bg-white/10 rounded-lg animate-pulse"></div>
-        </div>
-
-        {/* Info skeleton */}
-        <div className="space-y-3">
-          <div className="h-8 bg-white/10 rounded-lg animate-pulse"></div>
-          <div className="h-8 bg-white/10 rounded-lg animate-pulse"></div>
-          <div className="h-8 bg-white/10 rounded-lg animate-pulse"></div>
-        </div>
-
-        {/* Footer skeleton */}
-        <div className="h-px bg-white/10"></div>
-        <div className="flex justify-between">
-          <div className="h-5 w-24 bg-white/10 rounded animate-pulse"></div>
-          <div className="h-5 w-20 bg-white/10 rounded animate-pulse"></div>
-        </div>
-      </div>
-    </div>
+    <div className="h-[400px] rounded-[2rem] bg-white/5 animate-pulse border border-white/5" />
   );
 }
