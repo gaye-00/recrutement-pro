@@ -164,6 +164,7 @@ module.exports = {
         slideRight: "slideRight 0.5s ease-out",
         slideLeft: "slideLeft 0.5s ease-out",
         float: "float 6s ease-in-out infinite",
+        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "pulse-aurora": "pulse-aurora 3s ease-in-out infinite",
         "aurora-wave": "aurora-wave 15s ease infinite",
         "shimmer-aurora": "shimmer-aurora 3s infinite",
@@ -192,6 +193,10 @@ module.exports = {
         float: {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-20px)" },
+        },
+        pulse: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.5" },
         },
         "pulse-aurora": {
           "0%, 100%": {
@@ -254,6 +259,15 @@ module.exports = {
         "gradient-night":
           "linear-gradient(135deg, #030712 0%, #0B1120 50%, #030712 100%)",
       },
+    },
+    keyframes: {
+      fadeInUp: {
+        "0%": { opacity: "0", transform: "translateY(20px)" },
+        "100%": { opacity: "1", transform: "translateY(0)" },
+      },
+    },
+    animation: {
+      fadeInUp: "fadeInUp 0.6s ease-out forwards",
     },
   },
   plugins: [],

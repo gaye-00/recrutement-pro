@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { authService } from "./services/authService";
+import { authService, type AuthResponse } from "./services/authService";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ConnexionPage from "./components/auth/ConnexionPage";
-import OffreDetailPage from "./components/offresPage/OffreDetailPage";
+import OffreDetailPage from "./components/offres/OffreDetailPage";
 import OffresPage from "./pages/OffresPage";
 import HomePage from "./pages/HomePage";
 import InscriptionPage from "./components/auth/InscriptionPage";
@@ -58,6 +58,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/offres" element={<OffresPage />} />
           <Route path="/offres/:id" element={<OffreDetailPage />} />
+          {/* <Route path="/offres/:id" element={<OffreCard />} /> */}
 
           {/* Routes d'authentification */}
           <Route
